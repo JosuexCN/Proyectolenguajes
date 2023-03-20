@@ -4,7 +4,8 @@
  */
 package Presentacion;
 
-import Conexion.Conexion;
+
+import Conexion.Conexionproyecto;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,18 +22,23 @@ public class practica1 {
      */
     public static void main(String[] args) {
         String sSQL = "";
-        Conexion conexion = new Conexion();
+        Conexionproyecto conexion = new Conexionproyecto();
         
         try{
-            sSQL = "SELECT * FROM regions";
+            sSQL = "SELECT * FROM estudiante";
             Connection con = conexion.conectar();
             Statement on = con.createStatement();
             ResultSet res = on.executeQuery(sSQL);
             
             while(res.next()){
                 System.out.println("---------------------");
-                System.out.println(res.getInt("region_id"));
-                System.out.println(res.getString("region_name"));
+                System.out.println(res.getInt("idestudiante"));
+                System.out.println(res.getString("nombre"));
+                 System.out.println(res.getString("apellidos"));
+                  System.out.println(res.getString("fechanac"));
+                   System.out.println(res.getString("correo"));
+                    System.out.println(res.getString("genero"));
+                
               
                 
             }
