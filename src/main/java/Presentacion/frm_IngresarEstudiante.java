@@ -23,8 +23,7 @@ import javax.swing.JOptionPane;
  * @author Josuex
  */
 public class frm_IngresarEstudiante extends javax.swing.JFrame {
-private static final String SQL_INSERT_ESTUDIANTE ="insert into estudiante (idestudiante, nombre,"
-            + "apellidos,fechanac,correo,genero) values (?,?,?,?,?,?)";
+private static final String SQL_INSERT_ESTUDIANTE = "call insertar_estudiante(?, ?, ?, ?, ?, ?)";
 Conexionproyecto conexion = new Conexionproyecto();
     /**
      * Creates new form frm_IngresarEstudiante
@@ -195,20 +194,20 @@ Conexionproyecto conexion = new Conexionproyecto();
 
     private void btn_aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aceptarActionPerformed
         // TODO add your handling code here:
-        try{
-            
-        
+
+           try {
+
             Estudiante objEstudiante = new Estudiante();
-           // EstudianteGestion objGestion = new EstudianteGestion();
+            // EstudianteGestion objGestion = new EstudianteGestion();
             //DateFormat dateformat = new SimpleDateFormat ("yyyy-MM-dd");
-            
-            objEstudiante.setIdestudiante(Integer.parseInt( txt_cedula.getText()));
+
+            objEstudiante.setIdestudiante(Integer.parseInt(txt_cedula.getText()));
             objEstudiante.setNombre(txt_nombre.getText());
             objEstudiante.setApellidos(txt_apellido1.getText());
             objEstudiante.setGenero(txt_genero.getText());
             objEstudiante.setFechanac(txt_fecnac.getText());
-            objEstudiante.setCorreo( txt_correo.getText());
-            
+            objEstudiante.setCorreo(txt_correo.getText());
+
             //objGestion.insertar(objEstudiante);
             //Creamos la sentencia SQL
             //Connection con = conexion.conectar();
@@ -223,20 +222,19 @@ Conexionproyecto conexion = new Conexionproyecto();
             sentencia.setObject(5, objEstudiante.getCorreo());
             sentencia.setString(6, objEstudiante.getGenero());
             
-           
-            
-            if (sentencia.executeUpdate()>0){
-                JOptionPane.showMessageDialog(null,"Estudiante ingresado correctamente");
-            }else{
-                JOptionPane.showMessageDialog(null,"No se pudo ingresar el estudiante");
+            if (sentencia.executeUpdate() > 0) {
+                JOptionPane.showMessageDialog(null, "No se pudo ingresar el estudiante");
+            } else {
+                JOptionPane.showMessageDialog(null, "Estudiante ingresado correctamente");
+                
             }
-            
+
             limpiaCajasDeTexto();
-            
-         }catch (SQLException ex){
-            
+
+        } catch (SQLException ex) {
+
             JOptionPane.showMessageDialog(null, ex.getMessage());
-            
+
         }
     }//GEN-LAST:event_btn_aceptarActionPerformed
 
