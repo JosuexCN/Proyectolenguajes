@@ -10,6 +10,7 @@ package Presentacion;
  */
 import Conexion.Conexionproyecto;
 import Conexion.Estudiante;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 
 import java.sql.PreparedStatement;
@@ -25,8 +26,12 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class frm_verestudiantes extends javax.swing.JFrame {
+private static final String SQL_INSERT_ESTUDIANTE1 ="{call insertar_estudiante(?,?,?,?,?,?)}";
 private static final String SQL_SELECT_ESTUDIANTES = "Select * from estudiante";
+private static final String SQL_DELETE_ESTUDIANTE1 ="{call eliminar_estudiante(?)}";
+private static final String SQL_UPDATE_ESTUDIANTE1 ="{call modificar_estudiante(?,?,?,?,?,?)}";
 Conexionproyecto conexion = new Conexionproyecto();
+    String ced;
 //String sSQL = "";
     /**
      * Creates new form frm_verestudiantes
@@ -54,9 +59,10 @@ Conexionproyecto conexion = new Conexionproyecto();
             
            /* PreparedStatement consulta = Conexion.getConexion().prepareStatement(SQL_SELECT_ESTUDIANTES);
             ResultSet rs =consulta.executeQuery();*/
-            Connection con = conexion.conectar();
-            Statement on = con.createStatement();
-            ResultSet rs = on.executeQuery(SQL_SELECT_ESTUDIANTES);
+            /*Connection con = conexion.conectar();
+            Statement on = con.createStatement();*/
+            PreparedStatement on = conexion.conectar().prepareStatement(SQL_SELECT_ESTUDIANTES);
+            ResultSet rs = on.executeQuery();
             
             while (rs!=null && rs.next()){
                 datos[0] = rs.getString(1);
@@ -90,6 +96,32 @@ Conexionproyecto conexion = new Conexionproyecto();
         jScrollPane1 = new javax.swing.JScrollPane();
         tab_estudiante = new javax.swing.JTable();
         btn_salir = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        lbl_cedula = new javax.swing.JLabel();
+        txt_cedula = new javax.swing.JTextField();
+        lbl_titulo = new javax.swing.JLabel();
+        btn_aceptar1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        lbl_cedula2 = new javax.swing.JLabel();
+        lbl_nombre1 = new javax.swing.JLabel();
+        lbl_genero1 = new javax.swing.JLabel();
+        lbl_apellido2 = new javax.swing.JLabel();
+        lbl_correo1 = new javax.swing.JLabel();
+        lbl_fecn1 = new javax.swing.JLabel();
+        txt_cedula2 = new javax.swing.JTextField();
+        txt_genero1 = new javax.swing.JTextField();
+        txt_apellido2 = new javax.swing.JTextField();
+        txt_nombre1 = new javax.swing.JTextField();
+        txt_fecnac1 = new javax.swing.JTextField();
+        txt_correo1 = new javax.swing.JTextField();
+        btn_modifica = new javax.swing.JButton();
+        btn_inserta = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -122,28 +154,242 @@ Conexionproyecto conexion = new Conexionproyecto();
             }
         });
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
+
+        lbl_cedula.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lbl_cedula.setText("Cedula");
+
+        lbl_titulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lbl_titulo.setText("Eliminar Estudiante");
+
+        btn_aceptar1.setForeground(new java.awt.Color(0, 204, 255));
+        btn_aceptar1.setText("Aceptar");
+        btn_aceptar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_aceptar1ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Verifique bien el numero de cedula del estudiante antes de eliminar.");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(txt_cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47)
+                .addComponent(btn_aceptar1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addComponent(lbl_titulo))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(46, 46, 46)
+                                .addComponent(lbl_cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_titulo)
+                .addGap(18, 18, 18)
+                .addComponent(lbl_cedula)
+                .addGap(33, 33, 33)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_cedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_aceptar1))
+                .addGap(27, 27, 27)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
+
+        lbl_cedula2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbl_cedula2.setText("Cédula");
+
+        lbl_nombre1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbl_nombre1.setText("Nombre");
+
+        lbl_genero1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbl_genero1.setText("Genero");
+
+        lbl_apellido2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbl_apellido2.setText("Apellidos");
+
+        lbl_correo1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbl_correo1.setText("Correo");
+
+        lbl_fecn1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lbl_fecn1.setText("Fech.Nacimiento");
+
+        btn_modifica.setForeground(new java.awt.Color(0, 204, 204));
+        btn_modifica.setText("Modificar");
+        btn_modifica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_modificaActionPerformed(evt);
+            }
+        });
+
+        btn_inserta.setForeground(new java.awt.Color(0, 204, 204));
+        btn_inserta.setText("Insertar");
+        btn_inserta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_insertaActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setText("Ingresar y modificar estudiante");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbl_correo1)
+                                    .addComponent(lbl_cedula2))
+                                .addGap(25, 25, 25))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(lbl_nombre1)
+                                .addGap(18, 18, 18)))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txt_cedula2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_nombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_correo1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(50, 50, 50)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addComponent(lbl_genero1)
+                                        .addGap(75, 75, 75)
+                                        .addComponent(txt_genero1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel4Layout.createSequentialGroup()
+                                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lbl_fecn1)
+                                            .addComponent(lbl_apellido2))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txt_apellido2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txt_fecnac1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(btn_modifica, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(91, 91, 91)
+                                .addComponent(btn_inserta, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(123, 123, 123)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(30, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel3)
+                .addGap(66, 66, 66)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_cedula2)
+                    .addComponent(txt_cedula2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_genero1)
+                    .addComponent(txt_genero1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lbl_apellido2)
+                        .addComponent(txt_apellido2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lbl_nombre1)
+                        .addComponent(txt_nombre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_correo1)
+                    .addComponent(txt_correo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_fecn1)
+                    .addComponent(txt_fecnac1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_modifica)
+                    .addComponent(btn_inserta))
+                .addContainerGap())
+        );
+
+        jLabel4.setText("En esta seccion el administrador podra.");
+
+        jLabel2.setText("Ver la lista de estudiantes actualizada");
+
+        jLabel5.setText("Eliminar un estudiante a partir de la cedula");
+
+        jLabel6.setText("insertar nuevos estudiantes y modificar estudiantes actuales");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(300, 300, 300)
-                        .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(418, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(194, 194, 194))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(28, 28, 28))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_salir)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 13, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_salir)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -154,6 +400,139 @@ Conexionproyecto conexion = new Conexionproyecto();
         this.dispose();
     }//GEN-LAST:event_btn_salirActionPerformed
 
+    private void btn_aceptar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aceptar1ActionPerformed
+
+        /*EstudianteGestion objGestion = new EstudianteGestion();
+        ced = txt_cedula.getText();
+        if(cedula.equals(ced)){
+            objGestion.eliminar(ced);
+        }else{
+            JOptionPane.showMessageDialog(null, "no puede eliminar debido a que la cedula no coincide");
+        }*/
+        ced = txt_cedula.getText();
+
+        try{
+            //PreparedStatement consulta = conexion.conectar().prepareStatement(SQL_DELETE_ESTUDIANTE);
+            CallableStatement  consulta = conexion.conectar().prepareCall(SQL_DELETE_ESTUDIANTE1);
+            //PreparedStatement consulta= Conexion.getConexion().prepareStatement(SQL_DELETE_ESTUDIANTE);
+            consulta.setString(1, ced);
+            if (consulta.executeUpdate()>0){
+                JOptionPane.showMessageDialog(null,"Los datos del estudiante fueron borrados de la base de datos");
+            }else{
+                JOptionPane.showMessageDialog(null,"No fue encontada la cédula del estudiante en la base de datos");
+            }
+
+        }catch (SQLException ex){
+            //Logger.getLogger(EstudianteGestion.class.getName()).log(Level.SEVERE,null, ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        limpiaCajasDeTexto();
+        mostrar();
+    }//GEN-LAST:event_btn_aceptar1ActionPerformed
+
+    private void btn_modificaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificaActionPerformed
+        // TODO add your handling code here:
+        try{
+            
+        
+            Estudiante objEstudiante = new Estudiante();
+            //EstudianteGestion objGestion = new EstudianteGestion();
+           // DateFormat dateformat = new SimpleDateFormat ("yyyy-MM-dd");
+            
+            objEstudiante.setIdestudiante(Integer.parseInt( txt_cedula2.getText()));
+            objEstudiante.setNombre(txt_nombre1.getText());
+            objEstudiante.setApellidos(txt_apellido2.getText());
+            objEstudiante.setGenero(txt_genero1.getText());
+            objEstudiante.setFechanac(txt_fecnac1.getText());
+            objEstudiante.setCorreo( txt_correo1.getText());
+            
+            //objGestion.actualiza(objEstudiante);
+            //PreparedStatement sentencia = conexion.conectar().prepareCall(SQL_UPDATE_ESTUDIANTE);
+            CallableStatement  sentencia = conexion.conectar().prepareCall(SQL_UPDATE_ESTUDIANTE1);
+            sentencia.setInt(1, objEstudiante.getIdestudiante());
+            sentencia.setString(2, objEstudiante.getNombre());
+            sentencia.setString(3, objEstudiante.getApellidos());
+            sentencia.setString(4, objEstudiante.getFechanac());
+            sentencia.setObject(5, objEstudiante.getCorreo());
+            sentencia.setString(6, objEstudiante.getGenero());
+            //sentencia.setInt(7, objEstudiante.getIdestudiante());
+            
+            if (sentencia.executeUpdate()>0){
+                JOptionPane.showMessageDialog(null,"La información del estudiante fue actualizada correctamente");
+            }else{
+                JOptionPane.showMessageDialog(null,"No fue encontrado el estudiante para actualizarlo");
+            }
+            limpiaCajasDeTexto1();
+            mostrar();
+            
+         }catch (SQLException ex){
+            
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+            
+        }
+    }//GEN-LAST:event_btn_modificaActionPerformed
+
+    private void btn_insertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_insertaActionPerformed
+        // TODO add your handling code here:
+        try{
+
+            Estudiante objEstudiante = new Estudiante();
+            // EstudianteGestion objGestion = new EstudianteGestion();
+            //DateFormat dateformat = new SimpleDateFormat ("yyyy-MM-dd");
+
+            objEstudiante.setIdestudiante(Integer.parseInt( txt_cedula2.getText()));
+            objEstudiante.setNombre(txt_nombre1.getText());
+            objEstudiante.setApellidos(txt_apellido2.getText());
+            objEstudiante.setGenero(txt_genero1.getText());
+            objEstudiante.setFechanac(txt_fecnac1.getText());
+            objEstudiante.setCorreo( txt_correo1.getText());
+
+            //objGestion.insertar(objEstudiante);
+            //Creamos la sentencia SQL
+            //Connection con = conexion.conectar();
+            //PreparedStatement sentencia = conexion.conectar().prepareCall(SQL_INSERT_ESTUDIANTE);
+            CallableStatement  sentencia = conexion.conectar().prepareCall(SQL_INSERT_ESTUDIANTE1);
+            //Statement on = con.createStatement();
+            //ResultSet res = on.executeQuery(SQL_INSERT_ESTUDIANTE);
+            //PreparedStatement sentencia = Conexion.getConexion().prepareCall(SQL_INSERT_ESTUDIANTE);
+            sentencia.setInt(1, objEstudiante.getIdestudiante());
+            sentencia.setString(2, objEstudiante.getNombre());
+            sentencia.setString(3, objEstudiante.getApellidos());
+            sentencia.setString(4, objEstudiante.getFechanac());
+            sentencia.setObject(5, objEstudiante.getCorreo());
+            sentencia.setString(6, objEstudiante.getGenero());
+
+            if (sentencia.executeUpdate()>0){
+                JOptionPane.showMessageDialog(null,"Estudiante ingresado correctamente");
+            }else{
+                JOptionPane.showMessageDialog(null,"No se pudo ingresar el estudiante");
+            }
+
+            limpiaCajasDeTexto1();
+            mostrar();
+
+        }catch (SQLException ex){
+
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+
+        }
+    }//GEN-LAST:event_btn_insertaActionPerformed
+public void limpiaCajasDeTexto (){
+
+        this.txt_cedula.setText("");
+        
+    }
+    public void limpiaCajasDeTexto1 (){
+        
+        this.txt_apellido2.setText("");
+        //this.txt_apellido2.setText("");
+        this.txt_nombre1.setText("");
+        this.txt_correo1.setText("");
+        this.txt_fecnac1.setText("");
+        this.txt_cedula2.setText("");
+        this.txt_genero1.setText("");
+        
+    }
     /**
      * @param args the command line arguments
      */
@@ -191,9 +570,35 @@ Conexionproyecto conexion = new Conexionproyecto();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_aceptar1;
+    private javax.swing.JButton btn_inserta;
+    private javax.swing.JButton btn_modifica;
     private javax.swing.JButton btn_salir;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbl_apellido2;
+    private javax.swing.JLabel lbl_cedula;
+    private javax.swing.JLabel lbl_cedula2;
+    private javax.swing.JLabel lbl_correo1;
+    private javax.swing.JLabel lbl_fecn1;
+    private javax.swing.JLabel lbl_genero1;
+    private javax.swing.JLabel lbl_nombre1;
+    private javax.swing.JLabel lbl_titulo;
     private javax.swing.JTable tab_estudiante;
+    private javax.swing.JTextField txt_apellido2;
+    private javax.swing.JTextField txt_cedula;
+    private javax.swing.JTextField txt_cedula2;
+    private javax.swing.JTextField txt_correo1;
+    private javax.swing.JTextField txt_fecnac1;
+    private javax.swing.JTextField txt_genero1;
+    private javax.swing.JTextField txt_nombre1;
     // End of variables declaration//GEN-END:variables
 }

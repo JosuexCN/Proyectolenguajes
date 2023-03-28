@@ -57,20 +57,16 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="198" max="-2" attributes="0"/>
-                          <Component id="jLabel1" min="-2" pref="196" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="lbl_nombre" min="-2" max="-2" attributes="0"/>
+                              <Component id="lbl_correo" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="lbl_cedula" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="lbl_nombre" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lbl_correo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lbl_cedula" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="txt_cedula" min="-2" pref="87" max="-2" attributes="0"/>
                                       <Component id="txt_nombre" min="-2" pref="87" max="-2" attributes="0"/>
@@ -82,22 +78,26 @@
                                       <Component id="lbl_apellido1" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="lbl_genero" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="txt_apellido1" alignment="0" min="-2" pref="87" max="-2" attributes="0"/>
+                                      <Component id="txt_genero" min="-2" pref="87" max="-2" attributes="0"/>
+                                      <Component id="txt_fecnac" alignment="0" min="-2" pref="87" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="180" max="-2" attributes="0"/>
                                   <Component id="btn_salir" min="-2" pref="101" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
+                                  <Component id="btn_aceptar" min="-2" pref="100" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txt_apellido1" alignment="0" min="-2" pref="87" max="-2" attributes="0"/>
-                              <Component id="txt_genero" min="-2" pref="87" max="-2" attributes="0"/>
-                              <Component id="txt_fecnac" alignment="0" min="-2" pref="87" max="-2" attributes="0"/>
-                              <Component id="btn_aceptar" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
-                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="123" max="-2" attributes="0"/>
+                          <Component id="jLabel1" min="-2" pref="196" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="168" max="32767" attributes="0"/>
+                  <EmptySpace pref="39" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
