@@ -11,33 +11,26 @@ package Presentacion;
 import Conexion.Conexionproyecto;
 import Conexion.Estudiante;
 import java.sql.CallableStatement;
-import java.sql.Connection;
-
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import oracle.jdbc.OracleTypes;
 
 public class frm_verestudiantes extends javax.swing.JFrame {
-private static final String SQL_INSERT_ESTUDIANTE1 ="{call insertar_estudiante(?,?,?,?,?,?)}";
-private static final String SQL_SELECT_ESTUDIANTES = "Select * from estudiante";
-private static final String SQL_DELETE_ESTUDIANTE1 ="{call eliminar_estudiante(?)}";
-private static final String SQL_UPDATE_ESTUDIANTE1 ="{call modificar_estudiante(?,?,?,?,?,?)}";
+private static final String SQL_INSERT_ESTUDIANTE1 ="{call aplicacion.insertar_estudiante(?,?,?,?,?,?)}";
+private static final String SQL_SELECT_ESTUDIANTES1 = "{? = call aplicacion.Fun4SD_GetRecord}";
+private static final String SQL_DELETE_ESTUDIANTE1 ="{call aplicacion.eliminar_estudiante(?)}";
+private static final String SQL_UPDATE_ESTUDIANTE1 ="{call aplicacion.modificar_estudiante(?,?,?,?,?,?)}";
 Conexionproyecto conexion = new Conexionproyecto();
-    String ced;
+String ced;
 //String sSQL = "";
     /**
      * Creates new form frm_verestudiantes
      */
     public frm_verestudiantes() {
         initComponents();
+        this.setTitle("MENU DE ESTUDIANTES");
         mostrar();
     }
     public void mostrar(){
@@ -47,7 +40,7 @@ Conexionproyecto conexion = new Conexionproyecto();
         DefaultTableModel tab_estudiant = new DefaultTableModel();
         tab_estudiant.addColumn("idEstudiante");
         tab_estudiant.addColumn("Nombre");
-        tab_estudiant.addColumn("apelidos");
+        tab_estudiant.addColumn("apellidos");
         tab_estudiant.addColumn("fechanac");
         tab_estudiant.addColumn("correo");
         tab_estudiant.addColumn("genero");
@@ -61,8 +54,12 @@ Conexionproyecto conexion = new Conexionproyecto();
             ResultSet rs =consulta.executeQuery();*/
             /*Connection con = conexion.conectar();
             Statement on = con.createStatement();*/
-            PreparedStatement on = conexion.conectar().prepareStatement(SQL_SELECT_ESTUDIANTES);
-            ResultSet rs = on.executeQuery();
+            //PreparedStatement on = conexion.conectar().prepareStatement(SQL_SELECT_ESTUDIANTES);
+            CallableStatement  consulta = conexion.conectar().prepareCall(SQL_SELECT_ESTUDIANTES1);
+            consulta.registerOutParameter(1, OracleTypes.CURSOR);
+            consulta.execute();
+           // consulta.registerOutParameter(1, OracleTypes.CURSOR);
+            ResultSet rs = (ResultSet) consulta.getObject(1);;
             
             while (rs!=null && rs.next()){
                 datos[0] = rs.getString(1);
@@ -81,7 +78,35 @@ Conexionproyecto conexion = new Conexionproyecto();
             JOptionPane.showMessageDialog(null, ex.getMessage());
          
         }    
-        
+        /*
+        public Trabajador getById(Long id) {
+		Trabajador trabajador = jdbcTemplate.execute("{ ? = call PKG4SD_UT_TRABA.FUN4SD_GETRECORD(?) }", new CallableStatementCallback<Trabajador>() {
+
+			@Override
+			public Trabajador doInCallableStatement(CallableStatement cs) throws SQLException, DataAccessException {
+				cs.registerOutParameter(1, OracleTypes.CURSOR);
+				cs.setObject(2, id);
+				cs.execute();
+				
+				ResultSet rs = (ResultSet) cs.getObject(1);
+				Trabajador trabajador = new Trabajador();
+				while (rs.next()) {
+					trabajador.setCedula(rs.getLong("TRACED"));
+					trabajador.setNombre(rs.getString("TRANOM"));
+					trabajador.setApellido1(rs.getString("TRAAPE1"));
+					trabajador.setApellido2(rs.getString("TRAAPE2"));
+					trabajador.setFechaInicio(rs.getDate("TRAFECINI"));
+					trabajador.setEstado(rs.getString("TRAEST"));
+					trabajador.setObservacion(rs.getString("TRAOBS"));
+					trabajador.setSexo(rs.getString("TRASEX"));
+					trabajador.setId(rs.getLong("TRAID"));
+				}
+				return trabajador;
+			}
+		});
+		return trabajador;
+	}
+        */
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -348,13 +373,13 @@ Conexionproyecto conexion = new Conexionproyecto();
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)

@@ -78,6 +78,11 @@ public class Estudiante {
         this.genero = genero;
     }
 
+    @Override
+    public String toString() {
+        return "Estudiante{" + "idestudiante=" + idestudiante + ", nombre=" + nombre + ", apellidos=" + apellidos + ", fechanac=" + fechanac + ", correo=" + correo + ", genero=" + genero + '}';
+    }
+
     
    
    
